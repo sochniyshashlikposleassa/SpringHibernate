@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Service
@@ -21,19 +24,21 @@ public class UserServiceImp implements UserService {
       userDao.add(user);
    }
 
-   @Transactional
-   @Override
-   public void addCar(Car car) {
-      userDao.addCar(car);
-   }
-
    @Transactional(readOnly = true)
    @Override
    public List<User> listUsers() {
       return userDao.listUsers();
    }
 
-   @Transactional(readOnly = true)
+   @Transactional
    @Override
-   public List<Car> listCars() {return userDao.listCars();}
+   public User getUserByCar(String model, int series){
+      return userDao.getUserByCar(model, series);
+   }
+   @Transactional
+   @Override
+   public User getUserById(int id){
+      return userDao.getUserById(id);
+   }
 }
+

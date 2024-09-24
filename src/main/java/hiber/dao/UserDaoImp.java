@@ -29,12 +29,22 @@ public class UserDaoImp implements UserDao {
    }
 
    @Override
-   public void addCar(Car car) {sessionFactory.getCurrentSession().save(car);}
+   public User getUserByCar(String model, int series) {
+      User user = sessionFactory.getCurrentSession()
+              .createQuery("SELECT u FROM User u WHERE u.car.model=:model AND u.car.series=:series", User.class)
+              .setParameter("model", model)
+              .setParameter("series", series)
+              .uniqueResult();
+      return user;
+   }
 
    @Override
-   public List listCars() {
-      Query query=sessionFactory.getCurrentSession().createQuery("from Car");
-      return query.getResultList();
+   public User getUserById(int id){
+      User user = sessionFactory.getCurrentSession()
+              .createQuery("SELECT u FROM User u WHERE u.id=:id", User.class)
+              .setParameter("id", id)
+              .uniqueResult();
+      return user;
    }
 
 }
